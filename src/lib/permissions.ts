@@ -1,10 +1,9 @@
-import type { UserRole } from '@/types'
-
+// All users are admin — no role-based restrictions
 export const can = {
-  manageStaff: (role: UserRole | null) => role === 'admin',
-  manageDepartments: (role: UserRole | null) => role === 'admin',
-  bookBed: (role: UserRole | null) => role === 'admin' || role === 'registrar',
-  createReferral: (role: UserRole | null) => role === 'doctor',
-  viewAuditLog: (role: UserRole | null) => role === 'admin',
-  checkInOut: (role: UserRole | null) => role === 'admin' || role === 'registrar',
+  manageStaff: () => true,
+  manageDepartments: () => true,
+  bookBed: () => true,
+  createReferral: () => true,
+  viewAuditLog: () => true,
+  checkInOut: () => true,
 }

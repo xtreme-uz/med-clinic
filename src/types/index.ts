@@ -1,4 +1,3 @@
-export type UserRole = 'admin' | 'doctor' | 'registrar'
 export type BedStatus = 'free' | 'reserved' | 'occupied' | 'maintenance'
 export type ReservationStatus =
   | 'pending'
@@ -12,7 +11,6 @@ export type Gender = 'male' | 'female'
 export interface Profile {
   id: string
   full_name: string
-  role: UserRole
   phone: string | null
   department_id: string | null
   is_active: boolean

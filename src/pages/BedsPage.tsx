@@ -91,7 +91,11 @@ export function BedsPage() {
         size="lg"
       >
         {selected && (
-          <ReservationForm bed={selected} onDone={() => setSelected(null)} />
+          <ReservationForm
+            bed={selected}
+            roomBeds={grouped.find((g) => g.beds.some((b) => b.id === selected.id))?.beds}
+            onDone={() => setSelected(null)}
+          />
         )}
       </Modal>
     </div>

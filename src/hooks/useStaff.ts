@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabaseClient'
-import type { Profile, UserRole } from '@/types'
+import type { Profile } from '@/types'
 
 export type StaffRow = Profile & {
   department: { name: string } | null
@@ -22,7 +22,6 @@ export function useStaff() {
 
 export interface StaffUpdate {
   full_name: string
-  role: UserRole
   phone: string | null
   department_id: string | null
   is_active: boolean

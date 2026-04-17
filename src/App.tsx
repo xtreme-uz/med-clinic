@@ -48,46 +48,11 @@ export default function App() {
             <Route path="reservations" element={<ReservationsPage />} />
             <Route path="admissions" element={<AdmissionsPage />} />
             <Route path="admissions/:id/print" element={<DischargePrintPage />} />
-            <Route
-              path="departments"
-              element={
-                <ProtectedRoute roles={['admin']}>
-                  <DepartmentsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="rooms"
-              element={
-                <ProtectedRoute roles={['admin']}>
-                  <RoomsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="beds-manage"
-              element={
-                <ProtectedRoute roles={['admin']}>
-                  <BedsManagePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="staff"
-              element={
-                <ProtectedRoute roles={['admin']}>
-                  <StaffPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="audit-log"
-              element={
-                <ProtectedRoute roles={['admin']}>
-                  <AuditLogPage />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="departments" element={<DepartmentsPage />} />
+            <Route path="rooms" element={<RoomsPage />} />
+            <Route path="beds-manage" element={<BedsManagePage />} />
+            <Route path="staff" element={<StaffPage />} />
+            <Route path="audit-log" element={<AuditLogPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

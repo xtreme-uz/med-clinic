@@ -13,7 +13,6 @@ import {
   LogOut,
 } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
-import { can } from '@/lib/permissions'
 
 const navItem =
   'flex items-center gap-3 rounded-md px-3 py-2 text-sm text-slate-200 hover:bg-slate-700'
@@ -21,7 +20,6 @@ const activeItem = 'bg-slate-700 text-white'
 
 export function MainLayout() {
   const { profile, signOut } = useAuthStore()
-  const role = profile?.role ?? null
 
   return (
     <div className="flex h-screen">
@@ -43,33 +41,25 @@ export function MainLayout() {
           <NavLink to="/admissions" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
             <Hospital size={18} /> Yotqizish
           </NavLink>
-          {can.manageDepartments(role) && (
-            <>
-              <NavLink to="/departments" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
-                <Building2 size={18} /> Bo'limlar
-              </NavLink>
-              <NavLink to="/rooms" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
-                <DoorOpen size={18} /> Xonalar
-              </NavLink>
-              <NavLink to="/beds-manage" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
-                <Wrench size={18} /> Karavot boshqaruvi
-              </NavLink>
-            </>
-          )}
-          {can.manageStaff(role) && (
-            <NavLink to="/staff" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
-              <UserCog size={18} /> Xodimlar
-            </NavLink>
-          )}
-          {can.viewAuditLog(role) && (
-            <NavLink to="/audit-log" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
-              <ScrollText size={18} /> Audit Log
-            </NavLink>
-          )}
+          <NavLink to="/departments" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
+            <Building2 size={18} /> Bo'limlar
+          </NavLink>
+          <NavLink to="/rooms" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
+            <DoorOpen size={18} /> Xonalar
+          </NavLink>
+          <NavLink to="/beds-manage" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
+            <Wrench size={18} /> Karavot boshqaruvi
+          </NavLink>
+          <NavLink to="/staff" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
+            <UserCog size={18} /> Xodimlar
+          </NavLink>
+          <NavLink to="/audit-log" className={({ isActive }) => `${navItem} ${isActive ? activeItem : ''}`}>
+            <ScrollText size={18} /> Audit Log
+          </NavLink>
         </nav>
         <div className="mt-auto pt-6">
           <div className="mb-2 text-xs text-slate-400">
-            {profile?.full_name} · {profile?.role}
+            {profile?.full_name}
           </div>
           <button
             onClick={() => void signOut()}

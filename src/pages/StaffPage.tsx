@@ -6,13 +6,6 @@ import { Modal } from '@/components/ui/Modal'
 import { SkeletonRows } from '@/components/ui/Skeleton'
 import { EmptyRow } from '@/components/ui/EmptyState'
 import { UserRound } from 'lucide-react'
-import type { UserRole } from '@/types'
-
-const roleLabel: Record<UserRole, string> = {
-  admin: 'Admin',
-  doctor: 'Shifokor',
-  registrar: 'Registrator',
-}
 
 export function StaffPage() {
   const { data, isLoading } = useStaff()
@@ -24,7 +17,6 @@ export function StaffPage() {
     setEditing({
       id: s.id,
       full_name: s.full_name,
-      role: s.role,
       phone: s.phone,
       department_id: s.department_id,
       is_active: s.is_active,
@@ -51,7 +43,7 @@ export function StaffPage() {
 
       <div className="mb-4 rounded border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
         Yangi xodim qo'shish uchun Supabase Studio orqali Auth bo'limida user yarating,
-        keyin shu sahifada profilni tahrirlang (rol, bo'lim, telefon).
+        keyin shu sahifada profilni tahrirlang (bo'lim, telefon).
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow-sm">
@@ -59,7 +51,6 @@ export function StaffPage() {
           <thead className="bg-slate-100 text-left text-xs uppercase text-slate-600">
             <tr>
               <th className="px-4 py-2">FIO</th>
-              <th className="px-4 py-2">Rol</th>
               <th className="px-4 py-2">Bo'lim</th>
               <th className="px-4 py-2">Telefon</th>
               <th className="px-4 py-2">Faol</th>
@@ -68,12 +59,11 @@ export function StaffPage() {
           </thead>
           <tbody>
             {isLoading ? (
-              <SkeletonRows cols={6} />
+              <SkeletonRows cols={5} />
             ) : data?.length ? (
               data.map((s) => (
                 <tr key={s.id} className="border-t border-slate-100">
                   <td className="px-4 py-2 font-medium">{s.full_name}</td>
-                  <td className="px-4 py-2">{roleLabel[s.role]}</td>
                   <td className="px-4 py-2">{s.department?.name ?? '—'}</td>
                   <td className="px-4 py-2">{s.phone ?? '—'}</td>
                   <td className="px-4 py-2">
@@ -98,7 +88,7 @@ export function StaffPage() {
                 </tr>
               ))
             ) : (
-              <EmptyRow cols={6} icon={UserRound} title="Xodim yo'q" />
+              <EmptyRow cols={5} icon={UserRound} title="Xodim yo'q" />
             )}
           </tbody>
         </table>
@@ -119,20 +109,6 @@ export function StaffPage() {
                 onChange={(e) => setEditing({ ...editing, full_name: e.target.value })}
                 className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
               />
-            </label>
-            <label className="block">
-              <span className="text-xs text-slate-600">Rol</span>
-              <select
-                value={editing.role}
-                onChange={(e) =>
-                  setEditing({ ...editing, role: e.target.value as UserRole })
-                }
-                className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
-              >
-                <option value="admin">Admin</option>
-                <option value="doctor">Shifokor</option>
-                <option value="registrar">Registrator</option>
-              </select>
             </label>
             <label className="block">
               <span className="text-xs text-slate-600">Bo'lim</span>

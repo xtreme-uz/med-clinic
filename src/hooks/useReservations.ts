@@ -69,27 +69,31 @@ export interface NewReservation {
   diagnosis_preliminary?: string | null
   referral_number?: string | null
   notes?: string | null
+  price_adjustment?: number
 }
 
 export function useCreateReservation() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (
-      input: NewReservation & { reserved_by: string; status?: 'confirmed' | 'pending' },
+      input:
+        | (NewReservation & { reserved_by: string; status?: 'confirmed' | 'pending' })
+        | (NewReservation & { reserved_by: string; status?: 'confirmed' | 'pending' })[],
     ) => {
+      const rows = Array.isArray(input)
+        ? input.map((r) => ({ status: 'confirmed' as const, ...r }))
+        : [{ status: 'confirmed' as const, ...input }]
       const { data, error } = await supabase
         .from('reservations')
-        .insert({ status: 'confirmed', ...input })
+        .insert(rows)
         .select()
-        .single()
       if (error) {
-        // 23P01 = exclusion_violation (concurrent overlap)
         if (error.code === '23P01') {
-          throw new Error('Bu karavot tanlangan kunlarda allaqachon band qilingan.')
+          throw new Error('Tanlangan kunlarda karavot(lar) allaqachon band qilingan.')
         }
         throw error
       }
-      return data as Reservation
+      return data as Reservation[]
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['reservations'] })
