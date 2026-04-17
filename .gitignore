@@ -17,6 +17,7 @@ release
 !.env.example
 
 .claude
+supabase/.temp
 *.iml
 *.tsbuildinfo
 
